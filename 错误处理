@@ -1,0 +1,25 @@
+使用assert 来处理错误，这种会直接中断程序
+print "num"
+n = assert(io.read("*number"),"无效的值")
+
+打开不存在的文件报错
+file = assert(io.open("name","r"))
+
+
+pcall  error抛出错误，pcall捕捉错误
+local status,err = pcall(function()error({code=121})end)
+print(err.code)
+
+
+local status,err = pcall(function() a= "a"+1 end)
+print(err)
+结果：test.lua:193: attempt to perform arithmetic on a string value
+所以可以写个公用的 调用的时候先通过这个公用的判断
+
+
+xpcall 结合debug可以显示更完全的信息
+
+
+解释器可以使用debug.traceback来构建错误信息，也可以在任何时候调用
+
+print(debug.traceback())
