@@ -40,4 +40,28 @@ function add(...)
 end
 
 print(add(20,30,40))
-注意这边的pairs{} 是用                     
+注意这边的pairs{} 是用{} 大括号，函数遍历可变参时通常都用{...}
+
+select函数：
+function test(...)
+    for i=1,select('#',...)do
+        print(select(i,...))
+    end 
+end
+test(20,30,40)
+
+结果是：
+20	30	40
+30	40
+40
+select(i,...) 是返回从i开始后面的所有参数包含i，select('#',...) '#'返回可变参的总数包含你如果传的是nil
+
+用table去做具名参数
+rename{old="old",new="new"} 实参只有一个table做参数的时候可以省略()
+
+table = {old="old",new="new"}
+rename(table) 
+
+
+
+
