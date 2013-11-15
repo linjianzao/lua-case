@@ -1,1 +1,36 @@
- 
+自定义迭代器
+function values(t)
+    local i=0 
+    return function() i=i+1;  return t[i] end 
+end
+
+t={10,20,30}
+for element in values(t) do
+    print(element)
+end 
+
+pairs迭代器
+for k,v in pairs(t) do
+    print(k,v)
+end 
+
+t = {10,nil,20}
+for _,v in pairs(t) do
+    print(v)
+end     
+结果是10,20  也就是会省略nil值
+
+
+ipairs迭代器，这个迭代器当遇到值是nil 直接中断
+for k,v in ipairs(t) do
+    print(k,v)
+end 
+
+
+t = {10,nil,20}
+for _,v in ipairs(t) do
+    print(v)
+end     
+输出结果是10 而不是 10 nil 20
+
+
