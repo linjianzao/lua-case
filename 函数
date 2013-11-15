@@ -62,6 +62,11 @@ rename{old="old",new="new"} 实参只有一个table做参数的时候可以省�
 table = {old="old",new="new"}
 rename(table) 
 
+函数是变量：
+a={p=print}
+a.p(123)    输出123
+print=math.sin
+a.p(print(1)) 输出0.8414709848079
 
 
 
