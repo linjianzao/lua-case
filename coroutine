@@ -1,0 +1,56 @@
+coroutine有四种状态 挂起（suspended） 运行(running)   死亡(dead) 正常(normal)
+co = coroutine.create(function() print("hi") end)
+print(co)
+print(coroutine.status(co))     suspended
+coroutine.resume(co)            hi
+print(coroutine.status(co))     dead
+
+
+co = coroutine.create(function()  
+    for i=1,5 do
+        print("co",i)
+        coroutine.yield()
+    end
+end)
+coroutine.resume(co)  1
+coroutine.resume(co)  2
+coroutine.resume(co)  3
+coroutine.resume(co)  4
+coroutine.resume(co)  5
+coroutine.resume(co)  什么都没有
+print(coroutine.resume(co)) false	cannot resume dead coroutine
+
+
+
+co =  coroutine.create(function(a,b,c)
+   print("co",a,b,c) 
+end)
+coroutine.resume(co,1,2,3)  
+结果：co	1	2	3  没有yield等待
+
+
+co = coroutine.create(function(a,b) 
+    coroutine.yield(a+b,a-b)
+end)
+print(coroutine.resume(co,20,10))
+结果：true	30	10  有yield等待，所以值是yield传入的值
+
+
+co = coroutine.create(function()
+    print("co",coroutine.yield())
+end)
+coroutine.resume(co)
+coroutine.resume(co,4,5)
+结果：co	4	5 当有额外值的时候，yield返回传入的额外值
+
+
+co = coroutine.create(function()
+    return 6,7
+end)
+print(coroutine.resume(co))
+结果：true	6	7  主函数结束的时候返回值对应resume返回值
+
+
+
+
+
