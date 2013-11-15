@@ -1,0 +1,20 @@
+table 的定义方式
+a={}
+a["x"] = 10
+a.x=10
+a={x=10}  
+a={["x"]=10}
+
+table 长度 #a
+print(a[#a]) 删除a的最后一个元素
+a[#a]=nil  删除最后一个元素
+a[#a+1]=v   将v添加到a末尾
+
+table 的下标以1开始
+
+poyline = {corlor="bule",tick=2,npo=4
+            {x=0,y=0}
+            {x=-10,y=0}
+          }
+          
+print(poyline[2].x)   值是 -10
