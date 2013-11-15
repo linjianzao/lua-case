@@ -9,3 +9,156 @@ for element in values(t) do
 end 
 
 这就是自己写一个迭代，显示闭包的特性，i是非局部变量values函数外面调用i是累加的
+
+排序table.sort
+network={
+    {name="grauna",IP="192.168.1.1"},
+    {name="arrays",IP="192.168.1.2"},
+    {name="lua",IP="192.168.1.3"},
+    {name="golang",IP="192.168.1.4"},
+}
+
+table.sort(network,function(a,b)return (a.name>b.name)end)
+
+for _,v in pairs(network)do
+   print(v.name)
+end
+
+根据年级排序,grades这边是非局部变量，就是匿名函数里可以访问到grades
+names = {"lin","jian","zao"}
+grades = {lin=10,jian=7,zao=8}
+table.sort(names,function(n1,n2)
+           return grades[n1]>grades[n2]end 
+)
+
+for _,v in pairs(names)do
+   print(v)
+end
+
+
+计数器非局部变量,i是累加的
+function newCount()
+    local i=0
+    return function()
+            i=i+1
+            return i
+    end
+end
+c1=newCount()
+c2=newCount()
+print(c1()) 输出1
+print(c1()) 输出2
+print(c2()) 输出1
+
+
+几种定义方式
+方式1：
+Lib = {}
+Lib.foo = function(x,y) return x+y end
+Lib.goo = function(x,y) return x-y end
+方式2：
+Lib = {
+    foo =  function(x,y) return x+y end,
+    goo =  function(x,y) return x-y end,
+}
+方式3：
+Lib = {}
+function Lib.foo(x,y)return x+y end
+function Lib.goo(x,y)return x-y end
+
+
+这个定义是错的。因为fact(n-1)调用的是全局的fact
+local fact =  function (n)
+    if n==0 then 
+        return 1
+    else
+        return n*fact(n-1)
+    end
+end
+正确的写法：
+local fact
+fact =  function (n)
+    if n==0 then 
+        return 1
+    else
+        return n*fact(n-1)
+    end
+end
+
+或， 这种可以理解成正常的定义函数了
+local function  fact(n)
+    if n==0 then 
+       return 1
+    else
+       return n*fact(n-1)
+    end                        
+
+end
+print(fact(4))
+
+尾调用（不耗费任何栈空间，就是不会溢出）：
+function foo(n)
+    if n>0 then
+        return foo(n-1)
+    end
+end
+一个函数用另外一个函数作最后动作的时候，可以理解为return了
+function f(x) return g(x)end  是尾调用
+
+function f(x)  g(x)end  不是尾调用，还要等g(x)处理完
+
+function f(x)  g(x)+1 end  也不是，因为还要运算一次
+
+
+房间游戏：
+
+function room1()
+    local move = io.read()
+    if move == "dong" then
+        return room2()
+    elseif move =="xi"then
+        return room4()
+    else
+        print("走错了")
+        return room1()
+    end 
+end
+
+
+function room2()
+    local move = io.read()
+    if move == "bei" then
+        return room1()
+    elseif move =="nan" then
+        return room3()
+    else
+        print("走错了")
+        return room2()
+    end 
+end
+
+
+function room3()
+    local move = io.read()
+    if move == "dong" then
+        return room2()
+    elseif move =="xi" then
+        return room4()
+    else
+        print("走错了")
+        return room3()
+    end 
+end
+
+function room4()
+    print("过关")
+end 
+
+room1()
+
+
+
+
+
+
+
