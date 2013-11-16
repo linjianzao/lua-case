@@ -5,6 +5,7 @@ print(coroutine.status(co))     suspended
 coroutine.resume(co)            hi
 print(coroutine.status(co))     dead
 
+resume是在保护模式中运行的所以不会提示任何错误
 
 co = coroutine.create(function()  
     for i=1,5 do
@@ -13,13 +14,14 @@ co = coroutine.create(function()
     end
 end)
 coroutine.resume(co)  1
+print(coroutine.status(co))   suspended 当没有yield的时候输出是没有内容的
 coroutine.resume(co)  2
 coroutine.resume(co)  3
 coroutine.resume(co)  4
 coroutine.resume(co)  5
 coroutine.resume(co)  什么都没有
 print(coroutine.resume(co)) false	cannot resume dead coroutine
-
+有yield的时候会先suspended
 
 
 co =  coroutine.create(function(a,b,c)
