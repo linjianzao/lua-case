@@ -1,0 +1,12 @@
+table 库函数insert 和remove可以用来插入和删除元素，但是如果遇到较大的table的时候这个移动的开销是很大的。
+
+每行读取文件：
+local t ={}
+for line in io.lines() do
+    t[#t+1] = line 
+end
+local s = table.concat(t,"\n")
+
+为什么不直接for然后连接。
+因为string每次连接都要赋新值，行一多需要处理的次数就更多了
+
