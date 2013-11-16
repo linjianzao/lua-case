@@ -5,7 +5,13 @@ local t ={}
 for line in io.lines() do
     t[#t+1] = line 
 end
-local s = table.concat(t,"\n")
+local s = table.concat(t,"\n") 
+
+这个时候如果我们最后以行要回车：
+local s = table.concat(t,"\n") .. "\n" --这样做的话 s太长了，代价很大所以可以：
+
+t[#t+1] = "" --添加一个空字符串
+local s = table.concat(t,"\n")  --这样做就可以了
 
 为什么不直接for然后连接。
 因为string每次连接都要赋新值，行一多需要处理的次数就更多了
