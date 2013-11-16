@@ -1,0 +1,1 @@
+用string.format 的 %q 来过滤 不安全输入
