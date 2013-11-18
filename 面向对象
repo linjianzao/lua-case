@@ -1,0 +1,25 @@
+table就是一种对象
+
+Account = {balance=0}
+function Account.widthdraw(self,v)
+    self.balance = self.balance -v
+end
+a1 = Account
+Account = nil 
+a1.widthdraw(a1,100)
+print(a1.balance)
+
+简写：
+Account = {balance=0}
+function Account:widthdraw(v)
+    self.balance = self.balance -v
+end
+a1 = Account
+Account = nil 
+a1:widthdraw(100)
+print(a1.balance)
+
+因为self就相当于他自己的了。
+
+
+继承 setmetatable(a,{__index = b})   a继承b
