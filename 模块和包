@@ -1,0 +1,32 @@
+require  使用模块，  module 创建模块
+
+使用模块：
+一、
+ require "mod"
+ mod.foo()
+
+二、
+  local m=require "mod"
+  m.foo()
+  
+三、
+  require "mod"
+  local f = mod.foo
+  f()
+  
+  
+openresty中的目录配置
+lua_package_path '/var/www/html/game_usercenter/packages/?.lua;;/usr/share/lua/?.lua;';
+代码里写的文件名会替换? 比如代码里写 require "mod"：
+就会在'/var/www/html/game_usercenter/packages/mod.lua;;/usr/share/lua/mod.lua;'; 中查找模块
+
+
+在模块文件里写 module(...,package.seeall)就可以当模块使用了
+
+子模块：
+可以相当于文件夹：
+lua_package_path '/var/www/html/game_usercenter/packages/?.lua;;/usr/share/lua/?.lua;';
+require "mod.sub" 就相当于在
+'/var/www/html/game_usercenter/packages/mod/sub.lua;;/usr/share/lua/mod/sub.lua;'; 中查找模块
+
+
