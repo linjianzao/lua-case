@@ -1,0 +1,49 @@
+metatable 和 meatmethod
+通过元表来修改值的行为。
+创建table 的时候默认不会创建元表
+t={}
+print(getmetatable(t))   nil 
+
+setmetatable 设置元表
+t = {}
+setmetatable(t,t1)
+assert(getmetatable(t)==t1)
+
+在lua里只能设置table的元表，其他值必须通过c来设置：
+print(getmetatable("hi"))   table: 0x1ce7430
+print(getmetatable(10))     nil
+
+
+算术元方法：
+__add __mul __sub(减法) __div(除法) __unm(相反数) __mod(取模) __pow(乘幂) _concat(连接操作)
+
+关系元方法： __eq(等于) __lt(小于) __le(小于等于) 
+其他的没有单独的元方法，lua会将 a~=b 转为 not(a==b) ,将a>b 转为b<a ,将a>=b 转为b<=a
+
+库定义的元方法：
+
+
+table元方法：
+__index :访问table 的时候会先访问__index,用于table更新
+rawget  :如果不想访问_index 就可以用rawget(t,i)
+__newindex:__newindex用于table的查询，当对一个table中不存在的索引赋值，就会用这个
+rawset  :如果不想访问__newindex就调用rawset(t,k,v)
+
+默认值table：
+function setDefault(t,d)
+    local mt = {__index = function()return d end}
+    setmetatable(t,mt)
+end
+tab = {x=10,y=20}
+print(tab.x,tab.z)
+setDefault(tab,0)
+print(tab.x,tab.z)
+
+
+
+
+
+
+
+
+
